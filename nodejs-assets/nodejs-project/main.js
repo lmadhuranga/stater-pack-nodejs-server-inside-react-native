@@ -1,11 +1,16 @@
-var rn_bridge = require('rn-bridge');
+const os = require('os');
+let rn_bridge=undefined; 
+const {calert, localIp, platform, clog, init} = require('./helpers/utiles');
 
-// Echo every message received from react-native.
-rn_bridge.channel.on('message', (msg) => {
-  rn_bridge.channel.send(msg);
-} );
+// Check platform is mobile load the libries for mobile
+if(os.platform()==='android') rn_bridge = require('rn-bridge');
+init(rn_bridge);
+const express = require('express');
+const app = express();
+const port = 3000;
 
-// Inform react-native node is initialized.
-rn_bridge.channel.send("Wow Node was initialized. :) ", () => {
-  console.log('send msg')
+app.get('/', (req, res) => res.send(`Example app listening ${new Date()}on port ${localIp}:${port} /platform {${platform}}!`))
+
+app.listen(port, () => {
+  clog(`Example app listening ${new Date()}on port ${localIp}:${port} /platform {${platform}}!`);
 });

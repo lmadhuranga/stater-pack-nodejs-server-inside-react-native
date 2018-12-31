@@ -8,5 +8,8 @@
   "description": "node part of the project",
   "main": "main.js",
   "author": "janeasystems",
-  "license": ""
+  "license": "",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
