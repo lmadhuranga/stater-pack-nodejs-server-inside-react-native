@@ -8,8 +8,5 @@
   "description": "node part of the project",
   "main": "main.js",
   "author": "janeasystems",
-  "license": "",
-  "scripts": {
-    "start": "node ./bin/www"
-  }
+  "license": ""
 }
