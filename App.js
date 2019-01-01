@@ -22,17 +22,26 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      msg:'No msg'
+      server1:'',
+      server2:'',
     }
   }
   componentWillMount()
   {
     that = this
     nodejs.start('main.js');
+    // Server 1 status
     nodejs.channel.addListener(
-      'message',
+      'server1',
       (msg) => {
-        that.setState({'msg':msg});
+        that.setState({server1:msg});
+      },
+      this 
+    );
+    nodejs.channel.addListener(
+      'server2',
+      (msg) => {
+        that.setState({server2:msg});
       },
       this 
     );
@@ -44,7 +53,8 @@ export default class App extends Component {
           <Text style={styles.welcome}>Welcome to React Native!</Text>
           <Text style={styles.instructions}>To get started, edit App.js</Text>
           <Text style={styles.instructions}>{instructions}</Text>
-          <Text style={styles.instructions}>{this.state.msg}</Text>
+          <Text style={styles.instructions}>Server 1 : {this.state.server1}</Text>
+          <Text style={styles.instructions}>Server 2 : {this.state.server2}</Text>
           <Button style={styles.btn} title="Event trigger { Check in log cat }"
             onPress={() => nodejs.channel.post('myEvent','This message form frontend and show in the logcat {event msg}')}
           />

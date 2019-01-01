@@ -32,5 +32,15 @@ module.exports = {
     clog() {
         const msg = Object.values(arguments).join();
         isMobile?this.rn_bridge.channel.send(msg):console.log(msg);
+    },
+    cpost() {
+        if(isMobile) {
+            const events = Object.values(arguments);
+            this.rn_bridge.channel.post(events[0], events[1]);
+             
+        } else { 
+            const eventString = Object.values(arguments).join();
+            console.log('CPOST : ', eventString);
+        }
     }
 }
