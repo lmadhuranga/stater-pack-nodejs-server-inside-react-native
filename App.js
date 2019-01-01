@@ -18,15 +18,21 @@ const instructions = Platform.select({
 });
 
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      msg:'No msg'
+    }
+  }
   componentWillMount()
   {
+    that = this
     nodejs.start('main.js');
     nodejs.channel.addListener(
       'message',
       (msg) => {
-        alert('From node: ' + msg);
+        that.setState({'msg':msg});
       },
       this 
     );
@@ -38,6 +44,7 @@ export default class App extends Component<Props> {
           <Text style={styles.welcome}>Welcome to React Native!</Text>
           <Text style={styles.instructions}>To get started, edit App.js</Text>
           <Text style={styles.instructions}>{instructions}</Text>
+          <Text style={styles.instructions}>{this.state.msg}</Text>
           <Button style={styles.btn} title="Event trigger { Check in log cat }"
             onPress={() => nodejs.channel.post('myEvent','This message form frontend and show in the logcat {event msg}')}
           />

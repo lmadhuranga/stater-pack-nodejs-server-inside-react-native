@@ -29,10 +29,11 @@ function eventRegister() {
 
 const express = require('express');
 const app = express();
-const port = 3000;
+const port1 = 3000;
 
 app.get('/', (req, res) => res.send(`Server ${new Date()} Running  ${localIp}:${port} /platform {${platform}}!`))
 
-app.listen(port, () => {
-  clog(`Server on ${localIp}:${port} platform {${platform}}`);
+app.listen(port1, () => {
+  console.log(`Server on ${localIp}:${port1} platform {${platform}}`);
+  clog(`Server on ${localIp}:${port1} platform {${platform}}`);
 });
