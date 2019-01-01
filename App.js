@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
 
 const instructions = Platform.select({
@@ -35,9 +35,15 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+          <Text style={styles.welcome}>Welcome to React Native!</Text>
+          <Text style={styles.instructions}>To get started, edit App.js</Text>
+          <Text style={styles.instructions}>{instructions}</Text>
+          <Button style={styles.btn} title="Event trigger { Check in log cat }"
+            onPress={() => nodejs.channel.post('myEvent','This message form frontend and show in the logcat {event msg}')}
+          />
+          <Button style={styles.btn} title="Message Node { Check in log cat } "
+            onPress={() => nodejs.channel.send('A message! from front end but only { msg }')}
+          />
       </View>
     );
   }

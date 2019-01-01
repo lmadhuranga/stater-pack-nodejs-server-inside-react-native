@@ -1,16 +1,38 @@
-const os = require('os');
 let rn_bridge=undefined; 
-const {calert, localIp, platform, clog, init} = require('./helpers/utiles');
+const {calert, localIp, platform, clog, init, isMobile} = require('./helpers/utiles');
 
 // Check platform is mobile load the libries for mobile
-if(os.platform()==='android') rn_bridge = require('rn-bridge');
-init(rn_bridge);
+if(isMobile){
+  rn_bridge = require('rn-bridge');
+  init(rn_bridge);
+  registerListners();
+  eventRegister();
+}
+
+// Register mobile listners
+function registerListners() {
+  rn_bridge.app.on('pause', (pauseLock) => {
+    pauseLock.release();
+  });
+  rn_bridge.app.on('resume', () => {
+    console.log('[node] app resumed.');
+  });
+}
+
+// Rister Mobile events
+function eventRegister() {
+  // Event Register
+  rn_bridge.channel.on('myEvent', (msg) => {
+    console.log('myEvent msg ->', msg);
+  });
+}
+
 const express = require('express');
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => res.send(`Example app listening ${new Date()}on port ${localIp}:${port} /platform {${platform}}!`))
+app.get('/', (req, res) => res.send(`Server ${new Date()} Running  ${localIp}:${port} /platform {${platform}}!`))
 
 app.listen(port, () => {
-  clog(`Example app listening ${new Date()}on port ${localIp}:${port} /platform {${platform}}!`);
+  clog(`Server on ${localIp}:${port} platform {${platform}}`);
 });

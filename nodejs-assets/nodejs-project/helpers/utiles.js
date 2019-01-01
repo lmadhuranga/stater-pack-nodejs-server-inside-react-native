@@ -4,16 +4,7 @@ const isMobile  = platform=='android';
 module.exports = {
     rn_bridge:undefined,
     init(brige) {
-        if(brige){
-            this.rn_bridge = brige;
-            //listning all message send to logcat
-            this.rn_bridge.channel.on('message', (msg) => {
-                this.rn_bridge.channel.send(msg);
-            });
-        }
-        else {
-            console.log('os.platform()',os.platform());
-        }
+        this.rn_bridge = brige;
     },
     get localIp() {
         var interfaces = os.networkInterfaces();
